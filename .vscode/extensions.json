@@ -1,0 +1,7 @@
+{
+	"recommendations": [
+		"clinyong.vscode-css-modules",
+		"editorconfig.editorconfig",
+		"dbaeumer.vscode-eslint"
+	]
+}
