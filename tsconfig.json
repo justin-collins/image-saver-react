@@ -11,8 +11,13 @@
 		"jsx": "react-jsx",
 		"paths": {
 			"*": ["node_modules/*"],
+			 "@src/*": ["src/*"],
+			 "@api/*": ["electron/database/api/*"]
 		},
 		"types": ["@testing-library/jest-dom"]
 	},
 	"include": ["src", "electron"],
+	"files": [
+		"src/preload.d.ts"
+	]
 }

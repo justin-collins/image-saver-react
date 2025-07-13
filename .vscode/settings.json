@@ -1,0 +1,11 @@
+{
+	"sqltools.useNodeRuntime": true,
+	"sqltools.connections": [
+		{
+			"previewLimit": 50,
+			"driver": "SQLite",
+			"name": "image-saver",
+			"database": "${workspaceFolder:image-saver-react}/electron/database/database.db"
+		}
+	]
+}

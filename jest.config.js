@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-module.exports = {
+export default {
 	preset: "ts-jest",
 	testEnvironment: "jsdom",
 	verbose: true,

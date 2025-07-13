@@ -1,5 +1,7 @@
-// eslint-disable-next-line
-const { app, BrowserWindow } = require("electron");
+import { app, BrowserWindow } from 'electron';
+import path from "node:path";
+import { DatabaseManager } from "./database/database-manager";
+import { routeApiRequests } from './database/api/api-router';
 
 const icon = './src/assets/icon.png';
 
@@ -11,7 +13,10 @@ function createWindow() {
 		height: 1000,
 		show: false,
 		icon: icon,
-		autoHideMenuBar: true
+		autoHideMenuBar: true,
+		webPreferences: {
+			preload: path.join(__dirname, "preload.js")
+		},
 	});
 
 	window.webContents.on("did-finish-load", () => {
@@ -25,13 +30,16 @@ function createWindow() {
 		window.loadFile("dist/index.html");
 	}
 
-	// Open the DevTools.
-	// mainWindow.webContents.openDevTools();
+	window.webContents.openDevTools();
 }
 
-// This method is called when Electron has finished initializing
 app.whenReady().then(() => {
 	createWindow();
+	
+	DatabaseManager.initialize();
+	DatabaseManager.quickStart();
+
+	routeApiRequests();
 
 	app.on("activate", () => {
 		// On macOS it's common to re-create a window in the app when the
@@ -44,5 +52,8 @@ app.whenReady().then(() => {
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on("window-all-closed", function () {
-	if (process.platform !== "darwin") app.quit();
+	if (process.platform !== "darwin") {
+		DatabaseManager.destroy();
+		app.quit();
+	}
 });
