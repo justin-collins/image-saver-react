@@ -11,8 +11,8 @@
 		"jsx": "react-jsx",
 		"paths": {
 			"*": ["node_modules/*"],
-			 "@src/*": ["src/*"],
-			 "@api/*": ["electron/database/api/*"]
+			"@iv/*": ["src/*"],
+			"@api/*": ["electron/database/api/*"]
 		},
 		"types": ["@testing-library/jest-dom"]
 	},

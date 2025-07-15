@@ -141,3 +141,5 @@ vite.config.ts.timestamp-*
 #sql
 *.db**
 *.session.sql
+
+mockups/

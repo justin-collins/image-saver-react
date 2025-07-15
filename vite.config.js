@@ -7,6 +7,12 @@ export default defineConfig(({ command }) => {
 	const isBuild = command === 'build';
 	
 	return {
+		resolve: {
+			alias: {
+				"@iv": "/src",
+				"@api": "/electron/database/api",
+			}
+		},
 		plugins: [
 			react(),
 			electron({

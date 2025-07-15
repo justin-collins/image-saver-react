@@ -1,0 +1,33 @@
+.header {
+	height: 56px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.nav {
+	height: 100%;
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	align-items: center;
+}
+
+.navLink {
+	line-height: 1;
+	padding: 8px 12px;
+	text-decoration: none;
+	border-radius: 4px;
+	color: #495057;
+	font-size: 14px;
+	font-weight: 500;
+	transition: background-color 200ms ease-out;
+
+	&:hover {
+		background-color: #f8f9fa;
+	}
+
+	&.active {
+		color: #ffffff;
+		background-color: #228be6;
+	}
+}
