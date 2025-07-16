@@ -1,4 +1,4 @@
-import { MediaServiceType } from "../electron/database/api/media/media.service";
+import { MediaServiceType } from "@api/media";
 
 export {};
 

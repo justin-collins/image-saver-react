@@ -11,6 +11,7 @@ export default defineConfig(({ command }) => {
 			alias: {
 				"@iv": "/src",
 				"@api": "/electron/database/api",
+				"@test": "/test"
 			}
 		},
 		plugins: [

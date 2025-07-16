@@ -12,7 +12,8 @@
 		"paths": {
 			"*": ["node_modules/*"],
 			"@iv/*": ["src/*"],
-			"@api/*": ["electron/database/api/*"]
+			"@api/*": ["electron/database/api/*"],
+			"@test": ["test"]
 		},
 		"types": ["@testing-library/jest-dom"]
 	},

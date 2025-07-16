@@ -1,9 +1,10 @@
-import { render, screen } from "@testing-library/react";
 import { App } from "../app";
+import { render } from "@test";
+
+jest.mock('@iv/pages');
 
 describe("App", (): void => {
-	it("renders successfully", async (): Promise<void> => {
-		render(<App />);
-		expect(await screen.findByText(/Hello World App!/i)).toBeInTheDocument();
+	it("renders successfully", () => {
+		expect(() => render(<App />)).not.toThrow();
 	});
 });

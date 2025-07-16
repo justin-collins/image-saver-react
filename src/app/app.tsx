@@ -1,6 +1,6 @@
 import { Router } from '@iv/routing/router';
-import styles from './app.module.scss';
 import { Header } from '@iv/components';
+import styles from './app.module.scss';
 
 export const App = () => {
 	return (

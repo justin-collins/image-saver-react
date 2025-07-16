@@ -1,8 +1,8 @@
 import { useEffect, useCallback, useState } from 'react';
-import { Media } from '@api/media/media.types';
+import { Media } from '@api/media';
 
 export const MediaPage = () => {
-	const [media, setMedia] = useState<Media[]>([])
+	const [media, setMedia] = useState<Media[]>([]);
 
 	const fetchData = useCallback(async () => {
 		const data = await window.api.MediaService.getAllMedia();
