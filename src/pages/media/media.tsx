@@ -1,5 +1,7 @@
 import { useEffect, useCallback, useState } from 'react';
-import { Media } from '@api/media';
+import { Media } from '@api/media/media.types';
+import { SimpleGrid } from '@mantine/core';
+import { MediaPreview } from '@iv/components/media-preview/media-preview';
 
 export const MediaPage = () => {
 	const [media, setMedia] = useState<Media[]>([]);
@@ -13,12 +15,11 @@ export const MediaPage = () => {
 		fetchData();
 	}, [fetchData]);
 
-
 	return (
-		<>
+		<SimpleGrid cols={4}>
 			{media.map((mediaItem) => (
-				<span key={mediaItem.id}>{mediaItem.title}<br/></span>
+				<MediaPreview media={mediaItem} key={mediaItem.id} />
 			))}
-		</>
+		</SimpleGrid>
 	)
 };

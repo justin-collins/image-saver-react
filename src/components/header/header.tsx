@@ -1,5 +1,5 @@
 import { NavLink, NavLinkRenderProps } from "react-router";
-import styles from "./header.module.scss";
+import styles from "./header.module.css";
 
 export const Header = () => {
 	const generateNavLinkClasses = ({isActive}: NavLinkRenderProps): string => {

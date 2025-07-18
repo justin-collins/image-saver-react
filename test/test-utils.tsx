@@ -1,12 +1,15 @@
 import React from 'react';
 import { render, RenderOptions } from '@testing-library/react';
 import { BrowserRouter } from 'react-router';
+import { MantineProvider } from '@mantine/core';
 
 const AllProviders = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<BrowserRouter>
-			{children}
-		</BrowserRouter>
+		<MantineProvider>
+			<BrowserRouter>
+				{children}
+			</BrowserRouter>
+		</MantineProvider>
 	);
 };
 

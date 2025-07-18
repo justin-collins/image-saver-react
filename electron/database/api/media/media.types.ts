@@ -10,6 +10,7 @@ export interface Media {
 	createdAt: Date,
 	trashedAt: Date,
 }
+
 export enum MediaLocation {
 	LOCAL = 'LOCAL',
 	REMOTE = 'REMOTE'

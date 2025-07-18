@@ -11,7 +11,6 @@ function createWindow() {
 		y: 100,
 		width: 2000,
 		height: 1000,
-		show: false,
 		icon: icon,
 		autoHideMenuBar: true,
 		webPreferences: {
@@ -20,7 +19,6 @@ function createWindow() {
 	});
 
 	window.webContents.on("did-finish-load", () => {
-		window.show();
 		window.focus();
 	});
 
