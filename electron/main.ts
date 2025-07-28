@@ -7,7 +7,7 @@ const icon = './src/assets/icon.png';
 
 function createWindow() {
 	const window = new BrowserWindow({
-		x: 100,
+		x: 2660,
 		y: 100,
 		width: 2000,
 		height: 1000,
@@ -19,7 +19,7 @@ function createWindow() {
 	});
 
 	window.webContents.on("did-finish-load", () => {
-		window.focus();
+		// window.focus();
 	});
 
 	if (process.env.VITE_DEV_SERVER_URL) {

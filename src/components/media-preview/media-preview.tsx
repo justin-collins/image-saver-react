@@ -1,6 +1,6 @@
 import { Media } from "@api/media/media.types";
 import styles from './media-preview.module.css';
-import { MediaRenderer } from "@iv/components/media-renderer/media-renderer";
+import { MediaRenderer } from "@iv/components";
 
 export interface MediaPreviewProps {
 	media: Media;

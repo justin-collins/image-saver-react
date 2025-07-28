@@ -12,9 +12,7 @@
 
 .image {
 	background-color: black;
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center center;
+	object-fit: contain;
 }
 
 .filler {

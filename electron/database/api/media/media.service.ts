@@ -1,16 +1,57 @@
-import { Media } from "./media.types";
+import { Media, MediaFilter, MediaSortBy } from "./media.types";
 import { DatabaseManager } from "../../database-manager";
 
 export interface MediaServiceType {
-	getAllMedia: () => Promise<Media[]>
+	getAllMedia: () => Promise<Media[]>,
+	getAllTrashedMedia: () => Promise<Media[]>,
+	getFilteredMedia: (filter: MediaFilter) => Promise<Media[]>
 }
 
+const getBulk = (trashed: boolean) => {
+	const sql = `SELECT * FROM media WHERE trashed == ${trashed} ORDER BY created_at DESC`;
+
+	return DatabaseManager.selectAll(sql) as Media[];
+};
+
 const getAllMedia = (): Media[] => {
-	const sql = `SELECT * FROM media ORDER BY created_at DESC`;
+	return getBulk(false);
+};
+
+const getAllTrashedMedia = (): Media[] => {
+	return getBulk(true);
+};
+
+const getFilteredMedia = (filter: MediaFilter): Media[] => {
+	let sql = `SELECT distinct media.* FROM media`;
+	let whereSql = ` WHERE media.trashed == false`;
+	let postSql = ``;
+
+	if (filter.term) {
+		sql += ` LEFT JOIN mediaTagsMap ON mediaTagsMap.media_id == media.id`;
+		sql += ` LEFT JOIN tags ON tags.id == mediaTagsMap.tag_id`;
+		whereSql += ` AND (tags.title LIKE '%${filter.term}%' OR media.title LIKE '%${filter.term}%' OR media.url LIKE '%${filter.term}%')`;
+	}
+
+	if (filter.tagIds?.length) {
+		sql += ` INNER JOIN mediaTagsMap ON media.id = mediaTagsMap.media_id`;
+		whereSql += ` AND mediaTagsMap.tag_id IN (${filter.tagIds.join(',')})`;
+		postSql += ` GROUP BY media.id HAVING COUNT(DISTINCT mediaTagsMap.tag_id) = ${filter.tagIds.length}`;
+	}
+
+	if (filter.type) whereSql += ` AND media.type == '${filter.type}'`;
+	if (filter.location) whereSql += ` AND media.location == '${filter.location}'`;
+	sql += whereSql;
+	sql += postSql;
+
+	if (!filter.sortBy || filter.sortBy === MediaSortBy.DATE) sql += ` ORDER BY media.created_at DESC`;
+	else if (filter.sortBy && filter.sortBy === MediaSortBy.NAME) sql += ` ORDER BY media.title COLLATE NOCASE ASC`;
+	else if (filter.sortBy && filter.sortBy === MediaSortBy.SHUFFLE) sql += ` ORDER BY random()`;
 
 	return DatabaseManager.selectAll(sql) as Media[];
 };
 
 export const MediaService = {
-	getAllMedia
+	getAllMedia,
+	getAllTrashedMedia,
+	getFilteredMedia
 };

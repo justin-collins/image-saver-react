@@ -1,0 +1,48 @@
+.drawerContainer {
+	height: 100vh;
+	position: relative;
+	float: left;
+	margin-right: 60px;
+
+	.drawerContent {
+		width: 0;
+		padding: 0;
+		overflow: hidden;
+		visibility: hidden;
+		transition: width 300ms ease-out, padding 300ms ease-out;
+	}
+
+	.drawerToggleButton {
+		width: 40px;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		right: -40px;
+		border: 0;
+		cursor: pointer;
+		background-color: #efefef;
+		transition: background 200ms ease-out;
+
+		&:hover {
+			background-color: #c7c7c7;
+		}
+
+		.chevronIcon {
+			transition: transform 100ms ease-out;
+		}
+	}
+
+	&.open {
+		left: 0;
+
+		.drawerContent {
+			width: 200px;
+			padding: 20px;
+			visibility: visible;
+		}
+
+		.drawerToggleButton .chevronIcon {
+			transform: rotate(180deg);
+		}
+	}
+}

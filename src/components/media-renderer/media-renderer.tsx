@@ -12,15 +12,14 @@ export const MediaRenderer = ({ media }: MediaRendererProps) => {
 			{media.id ? 
 				<>
 				{media.type === MediaType.IMAGE || media.type === MediaType.GIF ? (
-					<div className={styles.image} style={{backgroundImage: `url(${encodeURI(media.url)})`, transform:`rotate(${media.rotation}deg)`}}></div>
+					<img className={styles.image} src={encodeURI(media.url)} style={{transform:`rotate(${media.rotation}deg)`}} loading="lazy" />
 				): media.type === MediaType.VIDEO && (
-					<video className={styles.video} src={encodeURI(media.url)} muted style={{transform:`rotate(${media.rotation}deg)`}} autoPlay={true} loop controls={false}></video>
+					<video className={styles.video} src={encodeURI(media.url)} style={{transform:`rotate(${media.rotation}deg)`}} muted autoPlay loop controls={false}></video>
 				)}
 				</>
 			:
 				<div className={styles.filler}><IconUserSquare className={styles.tablerIcon}/></div>
 			}
 		</div>
-
 	);
 };
