@@ -5,6 +5,8 @@ export interface MediaServiceType {
 	getAllMedia: () => Promise<Media[]>,
 	getAllTrashedMedia: () => Promise<Media[]>,
 	getFilteredMedia: (filter: MediaFilter) => Promise<Media[]>
+	trashMedia: (media: Media) => Promise<Media>
+	untrashMedia: (media: Media) => Promise<Media>
 }
 
 const getBulk = (trashed: boolean) => {
@@ -50,8 +52,29 @@ const getFilteredMedia = (filter: MediaFilter): Media[] => {
 	return DatabaseManager.selectAll(sql) as Media[];
 };
 
+const trashMedia = (media: Media): Media => {
+	return changeTrashed(media, true);
+};
+
+const untrashMedia = (media: Media): Media => {
+	return changeTrashed(media, false);
+};
+
+const changeTrashed = (media: Media, trash: boolean): Media => {
+	const trashedAtValue = (trash)? 'CURRENT_TIMESTAMP' : 'NULL';
+	const sql = `UPDATE media SET trashed = ${trash}, trashed_at = ${trashedAtValue} WHERE id == ${media.id}`;
+	DatabaseManager.update(sql);
+	
+	return {
+		...media,
+		trashed: trash
+	};
+};
+
 export const MediaService = {
 	getAllMedia,
 	getAllTrashedMedia,
-	getFilteredMedia
+	getFilteredMedia,
+	trashMedia,
+	untrashMedia
 };

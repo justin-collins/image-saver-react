@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron';
 import { MediaService } from './media.service';
 import { MediaKeys } from './media.keys';
-import { MediaFilter } from './media.types';
+import { Media, MediaFilter } from './media.types';
 
 export const MediaRouter = () => {
 	ipcMain.handle(MediaKeys.GET_ALL, () => {
@@ -12,5 +12,11 @@ export const MediaRouter = () => {
 	});
 	ipcMain.handle(MediaKeys.GET_FILTERED, (event, filter: MediaFilter) => {
 		return MediaService.getFilteredMedia(filter);
+	});
+	ipcMain.handle(MediaKeys.TRASH, (event, media: Media) => {
+		return MediaService.trashMedia(media);
+	});
+	ipcMain.handle(MediaKeys.UNTRASH, (event, media: Media) => {
+		return MediaService.untrashMedia(media);
 	});
 };

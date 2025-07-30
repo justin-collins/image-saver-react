@@ -15,7 +15,8 @@ import { useDebouncedState } from "@mantine/hooks";
 export interface UseMediaContext {
 	media: Media[];
 	mediaFilters: MediaFilter;
-	setMediaFilters: Dispatch<SetStateAction<MediaFilter>>
+	setMediaFilters: Dispatch<SetStateAction<MediaFilter>>;
+	trashMedia: (media: Media) => Promise<void>;
 };
 
 const defaultMediaFilters: MediaFilter = {
@@ -28,24 +29,31 @@ export const MediaContextProvider = ({ children }: { children: ReactElement }) =
 	const [media, setMedia] = useState<Media[]>([]);
 	const [mediaFilters, setMediaFilters] = useDebouncedState<MediaFilter>({...defaultMediaFilters}, 400);
 
-	const fetchData = useCallback(async () => {
+	const fetchMedia = useCallback(async () => {
 		const data = await window.api.MediaService.getFilteredMedia(mediaFilters);
 		setMedia(data);
 	}, [mediaFilters]);
 
 	useEffect(() => {
-		fetchData();
-	}, [fetchData]);
+		fetchMedia();
+	}, [fetchMedia]);
+
+	const trashMedia = useCallback(async (media: Media) => {
+		await window.api.MediaService.trashMedia(media);
+		await fetchMedia();
+	}, [fetchMedia]);
 
 	const value: UseMediaContext = useMemo(() => ({
 		media,
 		mediaFilters,
-		setMediaFilters
+		setMediaFilters,
+		trashMedia
 	}),
 	[
 		media,
 		mediaFilters,
-		setMediaFilters
+		setMediaFilters,
+		trashMedia
 	]);
 
 	return <MediaContext.Provider value={value}>{children}</MediaContext.Provider>

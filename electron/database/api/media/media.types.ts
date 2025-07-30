@@ -1,5 +1,5 @@
 export interface Media {
-	id: number,
+	id: number | bigint,
 	title: string,
 	url: string,
 	source: string,

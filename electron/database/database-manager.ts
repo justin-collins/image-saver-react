@@ -1,4 +1,4 @@
-import BetterSqlite3MultipleCiphers from "better-sqlite3-multiple-ciphers";
+import BetterSqlite3MultipleCiphers, { RunResult } from "better-sqlite3-multiple-ciphers";
 import fs from "fs";
 
 const BASE_PATH = "./electron/database";
@@ -31,10 +31,25 @@ const selectAll = (sql: string): unknown[] => {
 	return db.prepare(sql).all();
 };
 
+const insert = (sql: string): RunResult => {
+	return db.prepare(sql).run();
+};
+
+const update = (sql: string): RunResult => {
+	return db.prepare(sql).run();
+};
+
+const dbDelete = (sql: string): RunResult => {
+	return db.prepare(sql).run();
+};
+
 export const DatabaseManager = {
 	initialize,
 	destroy,
 	runFile,
 	quickStart,
-	selectAll
+	selectAll,
+	insert,
+	update,
+	dbDelete
 };

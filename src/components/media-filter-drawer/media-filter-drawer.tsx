@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { 
 	Button,
+	Indicator,
 	Input, 
 	MultiSelect, 
 	SegmentedControl, 
 	SegmentedControlItem, 
-	Select, 
+	Select,
+	Text,
 	TextInput 
 } from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";
@@ -109,6 +111,8 @@ export const MediaFilterDrawer = () => {
 		setMediaFilters(newFilters);
 	}, [searchTerm, mediaTags, mediaType, mediaLocation, mediaSortBy, mediaFilters, setMediaFilters]);
 
+	const hasFilters = (searchTerm) || mediaTags.length > 0 || (mediaType) || (mediaLocation);
+
 	return (
 		<div className={`${styles.drawerContainer} ${isOpen ? styles.open : ''}`}>
 			<div className={styles.drawerContent}>
@@ -148,17 +152,19 @@ export const MediaFilterDrawer = () => {
 					onChange={(value, option) => updateMediaLocation(option?.value as MediaLocation)}
 				/>
 
-				<p>{media.length} Result{media.length !== 1 ? 's' : ''}</p>
+				<Button onClick={clearAllFilters}>Clear All</Button>
+
+				<Text>{media.length} Result{media.length !== 1 ? 's' : ''}</Text>
 
 				<SegmentedControl 
 					data={createSortByLabels()}
 					onChange={(value) => updateMediaSortBy(value as MediaSortBy)}
 				/>
-
-				<Button onClick={clearAllFilters}>Clear All</Button>
 			</div>
 			<button className={styles.drawerToggleButton} onClick={toggleOpen}>
-				<IconChevronRight className={styles.chevronIcon}/>
+				<Indicator offset={5} disabled={!hasFilters}>
+					<IconChevronRight className={styles.chevronIcon}/>
+				</Indicator>
 			</button>
 		</div>
 	);

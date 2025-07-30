@@ -9,6 +9,9 @@
 		padding: 0;
 		overflow: hidden;
 		visibility: hidden;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
 		transition: width 300ms ease-out, padding 300ms ease-out;
 	}
 
