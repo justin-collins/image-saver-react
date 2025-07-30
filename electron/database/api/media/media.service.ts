@@ -2,11 +2,13 @@ import { Media, MediaFilter, MediaSortBy } from "./media.types";
 import { DatabaseManager } from "../../database-manager";
 
 export interface MediaServiceType {
-	getAllMedia: () => Promise<Media[]>,
-	getAllTrashedMedia: () => Promise<Media[]>,
-	getFilteredMedia: (filter: MediaFilter) => Promise<Media[]>
-	trashMedia: (media: Media) => Promise<Media>
-	untrashMedia: (media: Media) => Promise<Media>
+	getAllMedia: () => Promise<Media[]>;
+	getAllTrashedMedia: () => Promise<Media[]>;
+	getFilteredMedia: (filter: MediaFilter) => Promise<Media[]>;
+	trashMedia: (media: Media) => Promise<Media>;
+	untrashMedia: (media: Media) => Promise<Media>;
+	deleteMedia: (media: Media) => Promise<void>;
+	deleteAllTrashedMedia: () => Promise<void>;
 }
 
 const getBulk = (trashed: boolean) => {
@@ -71,10 +73,22 @@ const changeTrashed = (media: Media, trash: boolean): Media => {
 	};
 };
 
+const deleteMedia = (media: Media) => {
+	const sql = `DELETE from media WHERE id == ${media.id}`;
+	DatabaseManager.dbDelete(sql);
+};
+
+const deleteAllTrashedMedia = () => {
+	const sql = `DELETE from media WHERE trashed == true`;
+	DatabaseManager.dbDelete(sql);
+};
+
 export const MediaService = {
 	getAllMedia,
 	getAllTrashedMedia,
 	getFilteredMedia,
 	trashMedia,
-	untrashMedia
+	untrashMedia,
+	deleteMedia,
+	deleteAllTrashedMedia
 };

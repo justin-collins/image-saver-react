@@ -8,6 +8,8 @@ export const MediaRegister = {
 		getAllTrashedMedia: () => ipcRenderer.invoke(MediaKeys.GET_ALL_TRASHED),
 		getFilteredMedia: (filter: MediaFilter) => ipcRenderer.invoke(MediaKeys.GET_FILTERED, filter),
 		trashMedia: (media: Media) => ipcRenderer.invoke(MediaKeys.TRASH, media),
-		untrashMedia: (media: Media) => ipcRenderer.invoke(MediaKeys.UNTRASH, media)
+		untrashMedia: (media: Media) => ipcRenderer.invoke(MediaKeys.UNTRASH, media),
+		deleteMedia: (media: Media) => ipcRenderer.invoke(MediaKeys.DELETE, media),
+		deleteAllTrashedMedia: () => ipcRenderer.invoke(MediaKeys.DELETE_ALL_TRASHED)
 	}
 };

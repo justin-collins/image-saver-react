@@ -1,1 +1,2 @@
-export * from "./media/media"
+export * from "./media/media";
+export * from "./trash/trash";

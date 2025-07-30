@@ -1,0 +1,22 @@
+.mediaRendererWrapper {
+	width: 150px;
+	height: 150px;
+}
+
+.actionsWrapper {
+	display: flex;
+	justify-content: end;
+	gap: 20px;
+}
+
+.confirmModalButtonsWrapper {
+	padding-top: 20px;
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+}
+
+.noResults {
+	padding: 20px;
+	text-align: center;
+}

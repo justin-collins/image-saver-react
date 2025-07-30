@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ActionIcon, Button, Text, Tooltip } from "@mantine/core";
+import { notifications } from '@mantine/notifications';
 import { IconTrash } from "@tabler/icons-react";
 import { Media } from "@api/media/media.types";
 import styles from './media-preview.module.css';
@@ -17,6 +18,7 @@ export const MediaPreview = ({ media }: MediaPreviewProps) => {
 
 	const trashMediaConfirmed = () => {
 		trashMedia(media);
+		notifications.show({ message: 'Media Trashed' });
 	};
 
 	return (
@@ -24,7 +26,7 @@ export const MediaPreview = ({ media }: MediaPreviewProps) => {
 			<MediaRenderer media={media} />
 			{!showConfirmTrash ? (
 				<div className={styles.mediaTitle}>
-					<Text className={styles.truncated}>{media.title}</Text>
+					<Text lineClamp={6}>{media.title}</Text>
 					<Tooltip label="Trash">
 						<ActionIcon
 							variant="light" 
@@ -38,7 +40,7 @@ export const MediaPreview = ({ media }: MediaPreviewProps) => {
 				</div>
 			) : 
 				<div className={styles.confirmTrash}>
-					<Text ta="center">Trashing <Text c="dimmed" className={styles.truncated}>&quot;{media.title}&quot;</Text></Text>
+					<Text ta="center">Trashing <Text c="dimmed" lineClamp={6} component="span">&quot;{media.title}&quot;</Text></Text>
 					<div className={styles.buttonWrapper}>
 						<Button color="red" onClick={trashMediaConfirmed}>Trash</Button>
 						<Button variant="outline" onClick={() => setShowConfirmTrash(false)}>Cancel</Button>

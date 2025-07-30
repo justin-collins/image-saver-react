@@ -19,4 +19,10 @@ export const MediaRouter = () => {
 	ipcMain.handle(MediaKeys.UNTRASH, (event, media: Media) => {
 		return MediaService.untrashMedia(media);
 	});
+	ipcMain.handle(MediaKeys.DELETE, (event, media: Media) => {
+		return MediaService.deleteMedia(media);
+	});
+	ipcMain.handle(MediaKeys.DELETE_ALL_TRASHED, () => {
+		return MediaService.deleteAllTrashedMedia();
+	});
 };

@@ -27,16 +27,6 @@
 	}
 }
 
-.truncated {
-	display: -webkit-box;
-	line-clamp: 6;
-	-webkit-line-clamp: 6;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-	text-overflow: ellipsis;
-}
-
-
 .confirmTrash {
 	width: 100%;
 	height: 100%;
