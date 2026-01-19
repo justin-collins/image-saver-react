@@ -18,7 +18,7 @@ import { Tag } from "@api/tag/tag.types";
 import styles from './media-filter-drawer.module.css';
 
 export const MediaFilterDrawer = () => {
-	const { media, mediaFilters, setMediaFilters } = useMediaContext();
+	const { mediaList, mediaFilters, setMediaFilters } = useMediaContext();
 	const [tags, setTags] = useState<Tag[]>([]);
 
 	const fetchData = useCallback(async () => {
@@ -154,7 +154,7 @@ export const MediaFilterDrawer = () => {
 
 				<Button onClick={clearAllFilters}>Clear All</Button>
 
-				<Text>{media.length} Result{media.length !== 1 ? 's' : ''}</Text>
+				<Text>{mediaList.length} Result{mediaList.length !== 1 ? 's' : ''}</Text>
 
 				<SegmentedControl 
 					data={createSortByLabels()}

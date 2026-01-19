@@ -3,10 +3,15 @@ import { Media, MediaType } from "@api/media/media.types";
 import styles from './media-renderer.module.css';
 
 export interface MediaRendererProps {
-	media: Media;
+	media: Media | undefined;
 }
 
 export const MediaRenderer = ({ media }: MediaRendererProps) => {
+	if (!media){
+		return (
+			<div>Error: Media Not Found</div>
+		);
+	}
 	return (
 		<div className={styles.mediaFrame}>
 			{media.id ? 

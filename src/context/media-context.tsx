@@ -9,13 +9,16 @@ import {
 	useMemo, 
 	useState 
 } from "react";
-import { Media, MediaFilter, MediaSortBy } from '@api/media/media.types';
 import { useDebouncedState } from "@mantine/hooks";
+import { Media, MediaFilter, MediaSortBy } from '@api/media/media.types';
 
 export interface UseMediaContext {
-	media: Media[];
+	mediaList: Media[];
 	mediaFilters: MediaFilter;
+	selectedMedia: Media | undefined;
 	setMediaFilters: Dispatch<SetStateAction<MediaFilter>>;
+	setSelectedMedia: Dispatch<SetStateAction<Media | undefined>>;
+	loadMediaById: (mediaId: number) => Promise<void>;
 	trashMedia: (media: Media) => Promise<void>;
 	untrashMedia: (media: Media) => Promise<void>;
 };
@@ -27,13 +30,19 @@ const defaultMediaFilters: MediaFilter = {
 export const MediaContext = createContext<UseMediaContext | undefined>(undefined);
 
 export const MediaContextProvider = ({ children }: { children: ReactElement }) => {
-	const [media, setMedia] = useState<Media[]>([]);
+	const [mediaList, setMediaList] = useState<Media[]>([]);
 	const [mediaFilters, setMediaFilters] = useDebouncedState<MediaFilter>({...defaultMediaFilters}, 400);
+	const [selectedMedia, setSelectedMedia] = useState<Media | undefined>();
 
 	const loadFilteredMedia = useCallback(async () => {
 		const data = await window.api.MediaService.getFilteredMedia(mediaFilters);
-		setMedia(data);
+		setMediaList(data);
 	}, [mediaFilters]);
+
+	const loadMediaById = useCallback(async (mediaId: number) => {
+		const data = await window.api.MediaService.getMediaById(mediaId);
+		setSelectedMedia(data);
+	}, [setSelectedMedia]);
 
 	useEffect(() => {
 		loadFilteredMedia();
@@ -50,16 +59,22 @@ export const MediaContextProvider = ({ children }: { children: ReactElement }) =
 	}, [loadFilteredMedia]);
 
 	const value: UseMediaContext = useMemo(() => ({
-		media,
+		mediaList,
 		mediaFilters,
+		selectedMedia,
 		setMediaFilters,
+		setSelectedMedia,
+		loadMediaById,
 		trashMedia,
 		untrashMedia
 	}),
 	[
-		media,
+		mediaList,
 		mediaFilters,
+		selectedMedia,
 		setMediaFilters,
+		setSelectedMedia,
+		loadMediaById,
 		trashMedia,
 		untrashMedia
 	]);

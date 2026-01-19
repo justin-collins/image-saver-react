@@ -13,6 +13,9 @@ export const MediaRouter = () => {
 	ipcMain.handle(MediaKeys.GET_FILTERED, (event, filter: MediaFilter) => {
 		return MediaService.getFilteredMedia(filter);
 	});
+	ipcMain.handle(MediaKeys.GET_BYID, (event, mediaId: number) => {
+		return MediaService.getMediaById(mediaId);
+	});
 	ipcMain.handle(MediaKeys.TRASH, (event, media: Media) => {
 		return MediaService.trashMedia(media);
 	});

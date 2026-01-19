@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { ActionIcon, Button, Text, Tooltip } from "@mantine/core";
 import { notifications } from '@mantine/notifications';
 import { IconTrash } from "@tabler/icons-react";
@@ -6,15 +7,22 @@ import { Media } from "@api/media/media.types";
 import styles from './media-preview.module.css';
 import { MediaRenderer } from "@iv/components";
 import { useMediaContext } from "@iv/context";
+import { routes } from "@iv/routing";
 
 export interface MediaPreviewProps {
 	media: Media;
 }
 
 export const MediaPreview = ({ media }: MediaPreviewProps) => {
-	const { trashMedia } = useMediaContext();
+	const { setSelectedMedia, trashMedia } = useMediaContext();
+	const navigate = useNavigate();
 	
 	const [showConfirmTrash, setShowConfirmTrash] = useState(false);
+
+	const navigateToMediaDetail = (media: Media) => {
+		setSelectedMedia(media);
+		navigate(`${routes.media}/${media.id}`);
+	};
 
 	const trashMediaConfirmed = () => {
 		trashMedia(media);
@@ -22,7 +30,7 @@ export const MediaPreview = ({ media }: MediaPreviewProps) => {
 	};
 
 	return (
-		<div className={styles.mediaPreview}>
+		<div className={styles.mediaPreview} onClick={() => navigateToMediaDetail(media)}>
 			<MediaRenderer media={media} />
 			{!showConfirmTrash ? (
 				<div className={styles.mediaTitle}>

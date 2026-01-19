@@ -7,6 +7,7 @@ export const MediaRegister = {
 		getAllMedia: () => ipcRenderer.invoke(MediaKeys.GET_ALL),
 		getAllTrashedMedia: () => ipcRenderer.invoke(MediaKeys.GET_ALL_TRASHED),
 		getFilteredMedia: (filter: MediaFilter) => ipcRenderer.invoke(MediaKeys.GET_FILTERED, filter),
+		getMediaById: (mediaId: number) => ipcRenderer.invoke(MediaKeys.GET_BYID, mediaId),
 		trashMedia: (media: Media) => ipcRenderer.invoke(MediaKeys.TRASH, media),
 		untrashMedia: (media: Media) => ipcRenderer.invoke(MediaKeys.UNTRASH, media),
 		deleteMedia: (media: Media) => ipcRenderer.invoke(MediaKeys.DELETE, media),

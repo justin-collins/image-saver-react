@@ -5,6 +5,7 @@ export interface MediaServiceType {
 	getAllMedia: () => Promise<Media[]>;
 	getAllTrashedMedia: () => Promise<Media[]>;
 	getFilteredMedia: (filter: MediaFilter) => Promise<Media[]>;
+	getMediaById: (mediaId: number) => Promise<Media>;
 	trashMedia: (media: Media) => Promise<Media>;
 	untrashMedia: (media: Media) => Promise<Media>;
 	deleteMedia: (media: Media) => Promise<void>;
@@ -54,6 +55,12 @@ const getFilteredMedia = (filter: MediaFilter): Media[] => {
 	return DatabaseManager.selectAll(sql) as Media[];
 };
 
+const getMediaById = (mediaId: number): Media => {
+	const sql = `SELECT * FROM media WHERE id == ${mediaId}`;
+
+	return DatabaseManager.selectAll(sql)[0] as Media;
+};
+
 const trashMedia = (media: Media): Media => {
 	return changeTrashed(media, true);
 };
@@ -87,6 +94,7 @@ export const MediaService = {
 	getAllMedia,
 	getAllTrashedMedia,
 	getFilteredMedia,
+	getMediaById,
 	trashMedia,
 	untrashMedia,
 	deleteMedia,
