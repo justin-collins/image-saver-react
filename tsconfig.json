@@ -17,7 +17,7 @@
 		},
 		"types": ["@testing-library/jest-dom"]
 	},
-	"include": ["src", "electron"],
+	"include": ["src", "electron", "jest.setup.tsx"],
 	"files": [
 		"src/preload.d.ts"
 	]
